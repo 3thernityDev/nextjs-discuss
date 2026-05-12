@@ -10,12 +10,19 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+
     const router = useRouter();
 
-    async function handleSubmit(e: React.SubmitEvent) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+
         setLoading(true);
-        const { error } = await authClient.signIn.email({ email, password });
+
+        const { error } = await authClient.signIn.email({
+            email,
+            password,
+        });
+
         if (error) {
             console.log(error);
             setLoading(false);
@@ -24,32 +31,69 @@ export default function LoginPage() {
         }
     }
 
+    const handleRegister = () => {
+        router.push("/register");
+    };
+
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="flex flex-col items-center justify-center h-screen gap-4"
-        >
-            <input
-                type="text"
-                placeholder="email"
-                onChange={(e) => setEmail(e.target.value)}
-                className="border border-gray-300 rounded px-4 py-2 w-64"
-            />
-            <input
-                type="password"
-                placeholder="password"
-                onChange={(e) => setPassword(e.target.value)}
-                className="border border-gray-300 rounded px-4 py-2 w-64"
-            />
-            <Button
-                onClick={() => {}}
-                color="orange"
-                type="submit"
-                disabled={loading}
-            >
-                Se connecter
-            </Button>
-            {loading && <PacmanLoader color="#36d7b7" />}
-        </form>
+        <div className="flex min-h-screen items-center justify-center bg-zinc-100 px-4 dark:bg-zinc-950">
+            <div className="w-full max-w-md rounded-3xl border border-zinc-200 bg-white p-8 shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
+                <div className="mb-8 text-center">
+                    <h1 className="text-3xl font-bold text-zinc-900 dark:text-white">
+                        Connexion
+                    </h1>
+
+                    <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+                        Connectez-vous à votre compte DiscussLike
+                    </p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    <input
+                        type="email"
+                        placeholder="Adresse email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="rounded-xl border border-zinc-300 bg-white px-4 py-3 outline-none transition focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
+                    />
+
+                    <input
+                        type="password"
+                        placeholder="Mot de passe"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="rounded-xl border border-zinc-300 bg-white px-4 py-3 outline-none transition focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
+                    />
+
+                    <Button
+                        onClick={() => {}}
+                        color="orange"
+                        type="submit"
+                        disabled={loading}
+                    >
+                        {loading ? "Connexion..." : "Se connecter"}
+                    </Button>
+                </form>
+
+                <div className="mt-6 text-center">
+                    <span className="text-sm text-zinc-500 dark:text-zinc-400">
+                        Vous n'avez pas encore de compte ?
+                    </span>
+
+                    <button
+                        onClick={handleRegister}
+                        className="ml-2 text-sm font-medium text-orange-500 transition hover:underline"
+                    >
+                        S'inscrire
+                    </button>
+                </div>
+
+                {loading && (
+                    <div className="mt-6 flex justify-center">
+                        <PacmanLoader color="#f97316" size={12} />
+                    </div>
+                )}
+            </div>
+        </div>
     );
 }
