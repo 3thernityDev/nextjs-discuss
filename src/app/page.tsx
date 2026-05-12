@@ -16,7 +16,7 @@ export default function Home() {
                 Bienvenue sur DiscussLike !
             </h1>
 
-            <Button onClick={handleStartChatting} color="orange">
+            <Button onClick={handleStartChatting} color="orange" type="button">
                 Commencer a discuter
             </Button>
         </div>

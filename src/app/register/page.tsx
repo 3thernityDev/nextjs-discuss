@@ -3,6 +3,7 @@
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { PacmanLoader } from "react-spinners";
+import Button from "@/components/Button";
 
 export default function RegisterPage() {
     const [name, setName] = useState("");
@@ -27,25 +28,37 @@ export default function RegisterPage() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form
+            onSubmit={handleSubmit}
+            className="flex flex-col items-center justify-center h-screen gap-4"
+        >
             <input
                 type="text"
                 placeholder="name"
                 onChange={(e) => setName(e.target.value)}
+                className="border border-gray-300 rounded px-4 py-2 w-64"
             />
             <input
                 type="text"
                 placeholder="email"
                 onChange={(e) => setEmail(e.target.value)}
+                className="border border-gray-300 rounded px-4 py-2 w-64"
             />
             <input
-                type="text"
+                type="password"
                 placeholder="password"
                 onChange={(e) => setPassword(e.target.value)}
+                className="border border-gray-300 rounded px-4 py-2 w-64"
             />
-            <button type="submit" disabled={loading}>
-                {loading ? <PacmanLoader /> : "S'inscrire"}
-            </button>
+            <Button
+                onClick={() => {}}
+                color="orange"
+                type="submit"
+                disabled={loading}
+            >
+                S&apos;inscrire
+            </Button>
+            {loading && <PacmanLoader color="#36d7b7" />}
         </form>
     );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/components/Button";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -24,20 +25,31 @@ export default function LoginPage() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form
+            onSubmit={handleSubmit}
+            className="flex flex-col items-center justify-center h-screen gap-4"
+        >
             <input
                 type="text"
                 placeholder="email"
                 onChange={(e) => setEmail(e.target.value)}
+                className="border border-gray-300 rounded px-4 py-2 w-64"
             />
             <input
-                type="text"
+                type="password"
                 placeholder="password"
                 onChange={(e) => setPassword(e.target.value)}
+                className="border border-gray-300 rounded px-4 py-2 w-64"
             />
-            <button type="submit" disabled={loading}>
-                {loading ? <PacmanLoader /> : "Se connecter"}
-            </button>
+            <Button
+                onClick={() => {}}
+                color="orange"
+                type="submit"
+                disabled={loading}
+            >
+                Se connecter
+            </Button>
+            {loading && <PacmanLoader color="#36d7b7" />}
         </form>
     );
 }
