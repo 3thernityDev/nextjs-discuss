@@ -21,13 +21,26 @@ export default function CardMessage({
     const [editContent, setEditContent] = useState(m.content);
     const [saving, setSaving] = useState(false);
     const [canEdit, setCanEdit] = useState(false);
+    const [sentTime, setSentTime] = useState("--:--");
+    const [sentTitle, setSentTitle] = useState("");
 
     useEffect(() => {
         function updateCanEdit() {
             setCanEdit(isOwn && Date.now() - sentAt.getTime() <= EDIT_WINDOW_MS);
         }
 
-        const initial = window.setTimeout(updateCanEdit, 0);
+        function updateClientOnlyLabels() {
+            updateCanEdit();
+            setSentTitle(sentAt.toLocaleString("fr-FR"));
+            setSentTime(
+                sentAt.toLocaleTimeString("fr-FR", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                }),
+            );
+        }
+
+        const initial = window.setTimeout(updateClientOnlyLabels, 0);
         const interval = window.setInterval(updateCanEdit, 15_000);
 
         return () => {
@@ -192,15 +205,12 @@ export default function CardMessage({
                 </div>
 
                 <span
-                    title={sentAt.toLocaleString("fr-FR")}
+                    title={sentTitle}
                     className={`px-2 text-[11px] text-zinc-400 ${
                         isOwn ? "text-right" : "text-left"
                     }`}
                 >
-                    {sentAt.toLocaleTimeString("fr-FR", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                    })}
+                    {sentTime}
                     {m.editedAt ? " · modifie" : ""}
                     {canEdit && !isEditing ? " · editable" : ""}
                 </span>

@@ -8,20 +8,19 @@ import { authClient } from "@/lib/auth-client";
 
 export default function ChatPage() {
     const { data: session } = authClient.useSession();
-    const [isOnline, setIsOnline] = useState(() => {
-        if (typeof navigator === "undefined") return true;
-        return navigator.onLine;
-    });
+    const [isOnline, setIsOnline] = useState(true);
 
     useEffect(() => {
         function updateOnlineStatus() {
             setIsOnline(navigator.onLine);
         }
 
+        const initial = window.setTimeout(updateOnlineStatus, 0);
         window.addEventListener("online", updateOnlineStatus);
         window.addEventListener("offline", updateOnlineStatus);
 
         return () => {
+            window.clearTimeout(initial);
             window.removeEventListener("online", updateOnlineStatus);
             window.removeEventListener("offline", updateOnlineStatus);
         };
