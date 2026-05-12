@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -15,12 +16,9 @@ export default function Home() {
                 Bienvenue sur DiscussLike !
             </h1>
 
-            <button
-                onClick={handleStartChatting}
-                className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 cursor-pointer"
-            >
-                Commencer à discuter
-            </button>
+            <Button onClick={handleStartChatting} color="orange">
+                Commencer a discuter
+            </Button>
         </div>
     );
 }
