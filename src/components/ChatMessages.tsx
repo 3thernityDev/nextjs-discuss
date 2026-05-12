@@ -27,7 +27,7 @@ export default function ChatMessages() {
     }
 
     return (
-        <div className="p-4 flex gap-4 flex-col">
+        <div className="p-4 flex gap-4 flex-col center">
             {messages.map((m) => (
                 <CardMessage m={m} userId={session?.user.id} key={m._id} />
             ))}

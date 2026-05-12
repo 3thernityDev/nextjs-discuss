@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Button from "./Button";
 
 export default function ChatInput() {
     const [content, setContent] = useState("");
@@ -22,12 +23,17 @@ export default function ChatInput() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Votre Message..."
-                onChange={(e) => setContent(e.target.value)}
-            />
-            <button type="submit">Envoyer</button>
+            <div className="flex gap-2">
+                <input
+                    type="text"
+                    placeholder="Votre Message..."
+                    onChange={(e) => setContent(e.target.value)}
+                    className="border border-gray-300 rounded px-4 py-2 w-full"
+                />
+                <Button onClick={() => {}} color="orange" type="submit">
+                    Envoyer
+                </Button>
+            </div>
         </form>
     );
 }
