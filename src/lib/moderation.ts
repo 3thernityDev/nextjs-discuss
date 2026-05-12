@@ -79,7 +79,13 @@ function containsBlockedTerm(value: string, terms = BANNED_TERMS) {
 
 export function sanitizeMessageContent(content: unknown) {
     if (typeof content !== "string") return "";
-    return content.replace(/\s+/g, " ").trim();
+    return content
+        .replace(/\r\n?/g, "\n")
+        .split("\n")
+        .map((line) => line.replace(/[ \t\f\v]+/g, " ").trim())
+        .join("\n")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
 }
 
 export function moderateMessage(content: unknown): ModerationResult {

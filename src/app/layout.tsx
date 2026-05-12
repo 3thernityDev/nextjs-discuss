@@ -8,6 +8,14 @@ export const metadata: Metadata = {
     description: "Chat public avec moderation, images et edition courte des messages.",
     manifest: "/manifest.webmanifest",
     applicationName: "DiscussLike",
+    icons: {
+        icon: [
+            { url: "/icon.svg", type: "image/svg+xml" },
+            { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+            { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+        ],
+        apple: [{ url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
+    },
     appleWebApp: {
         capable: true,
         title: "DiscussLike",
@@ -16,6 +24,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+    width: "device-width",
+    initialScale: 1,
     themeColor: "#f97316",
 };
 

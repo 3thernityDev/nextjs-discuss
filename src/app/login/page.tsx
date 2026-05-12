@@ -28,7 +28,7 @@ export default function LoginPage() {
             toast.error("Identifiants invalides.");
             setLoading(false);
         } else {
-            router.push("/chat");
+            window.location.assign("/chat");
         }
     }
 

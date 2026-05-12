@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v3-chat-media-edit";
+const CACHE_VERSION = "v4-mobile-auth-flow";
 const STATIC_CACHE = `discusslike-static-${CACHE_VERSION}`;
 const PAGE_CACHE = `discusslike-pages-${CACHE_VERSION}`;
 
@@ -6,10 +6,11 @@ const APP_SHELL = [
     "/",
     "/login",
     "/register",
-    "/chat",
     "/manifest.webmanifest",
     "/icon.svg",
     "/icon-maskable.svg",
+    "/icon-192.png",
+    "/icon-512.png",
 ];
 
 const OFFLINE_PAGE = `<!doctype html>
@@ -68,7 +69,7 @@ self.addEventListener("fetch", (event) => {
         return;
     }
 
-    if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/auth/")) {
+    if (url.pathname.startsWith("/api/")) {
         event.respondWith(fetch(request));
         return;
     }
@@ -102,7 +103,7 @@ async function networkFirstPage(request) {
         const cached = await cache.match(request);
         if (cached) return cached;
 
-        const shell = await caches.match("/chat");
+        const shell = await caches.match("/");
         if (shell) return shell;
 
         return new Response(OFFLINE_PAGE, {

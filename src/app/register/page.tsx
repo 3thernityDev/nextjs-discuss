@@ -45,7 +45,7 @@ export default function RegisterPage() {
             setName("");
             setEmail("");
             setPassword("");
-            router.push("/chat");
+            window.location.assign("/chat");
         }
 
         setLoading(false);

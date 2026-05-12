@@ -6,11 +6,24 @@ export default function ServiceWorkerRegister() {
     useEffect(() => {
         if (!("serviceWorker" in navigator)) return;
 
-        window.addEventListener("load", () => {
-            navigator.serviceWorker.register("/sw.js").catch((error) => {
+        function registerServiceWorker() {
+            navigator.serviceWorker.register("/sw.js").then((registration) => {
+                registration.update().catch(() => {});
+            }).catch((error) => {
                 console.warn("Service worker registration failed", error);
             });
-        });
+        }
+
+        if (document.readyState === "complete") {
+            registerServiceWorker();
+            return;
+        }
+
+        window.addEventListener("load", registerServiceWorker);
+
+        return () => {
+            window.removeEventListener("load", registerServiceWorker);
+        };
     }, []);
 
     return null;
