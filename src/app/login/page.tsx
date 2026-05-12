@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 import { PacmanLoader } from "react-spinners";
 
 export default function LoginPage() {
@@ -15,7 +16,6 @@ export default function LoginPage() {
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-
         setLoading(true);
 
         const { error } = await authClient.signIn.email({
@@ -25,15 +25,12 @@ export default function LoginPage() {
 
         if (error) {
             console.log(error);
+            toast.error("Identifiants invalides.");
             setLoading(false);
         } else {
             router.push("/chat");
         }
     }
-
-    const handleRegister = () => {
-        router.push("/register");
-    };
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-zinc-100 px-4 dark:bg-zinc-950">
@@ -44,7 +41,7 @@ export default function LoginPage() {
                     </h1>
 
                     <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-                        Connectez-vous à votre compte DiscussLike
+                        Connectez-vous a votre compte DiscussLike
                     </p>
                 </div>
 
@@ -53,6 +50,7 @@ export default function LoginPage() {
                         type="email"
                         placeholder="Adresse email"
                         value={email}
+                        autoComplete="email"
                         onChange={(e) => setEmail(e.target.value)}
                         className="rounded-xl border border-zinc-300 bg-white px-4 py-3 outline-none transition focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
                     />
@@ -61,6 +59,7 @@ export default function LoginPage() {
                         type="password"
                         placeholder="Mot de passe"
                         value={password}
+                        autoComplete="current-password"
                         onChange={(e) => setPassword(e.target.value)}
                         className="rounded-xl border border-zinc-300 bg-white px-4 py-3 outline-none transition focus:border-orange-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
                     />
@@ -77,14 +76,14 @@ export default function LoginPage() {
 
                 <div className="mt-6 text-center">
                     <span className="text-sm text-zinc-500 dark:text-zinc-400">
-                        Vous n'avez pas encore de compte ?
+                        Vous n&apos;avez pas encore de compte ?
                     </span>
 
                     <button
-                        onClick={handleRegister}
+                        onClick={() => router.push("/register")}
                         className="ml-2 text-sm font-medium text-orange-500 transition hover:underline"
                     >
-                        S'inscrire
+                        S&apos;inscrire
                     </button>
                 </div>
 
